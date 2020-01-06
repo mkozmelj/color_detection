@@ -6,6 +6,8 @@ import argparse
 import cv2
 import imutils
 import time
+import timeit
+
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
@@ -19,7 +21,7 @@ args = vars(ap.parse_args())
 # ball in the HSV color space, then initialize the
 # list of tracked points
 orangeLower = (0,130,150)
-orangeUpper = (5,200,200)
+orangeUpper = (180,255,255)
 pts = deque(maxlen=args["buffer"])
 
 # if a video path was not supplied, grab the reference
@@ -34,8 +36,11 @@ else:
 # allow the camera or video file to warm up
 time.sleep(2.0)
 
+times = []
 # keep looping
 while True:
+	start = timeit.timeit()
+
 	# grab the current frame
 	frame = vs.read()
 
@@ -107,7 +112,12 @@ while True:
 
 	# if the 'q' key is pressed, stop the loop
 	if key == ord("q"):
+		print("Average time by frame is " + str(sum(times) / len(times)))
 		break
+
+	end = timeit.timeit()
+	times.append(end-start)
+	# print(end - start)
 
 # if we are not using a video file, stop the camera video stream
 if not args.get("video", False):

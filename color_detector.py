@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
 
-
 cap = cv2.VideoCapture(0)
+
 
 def nothing(x):
     pass
@@ -20,10 +20,9 @@ cv2.createTrackbar('s', 'result',0,255,nothing)
 cv2.createTrackbar('v', 'result',0,255,nothing)
 
 while 1:
-
     _, frame = cap.read()
 
-    #converting to HSV
+    # converting to HSV
     hsv = cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
 
     # get info from track bar and appy to result
