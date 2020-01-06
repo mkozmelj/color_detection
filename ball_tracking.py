@@ -39,7 +39,7 @@ time.sleep(2.0)
 times = []
 # keep looping
 while True:
-	start = timeit.timeit()
+	start = time.time()
 
 	# grab the current frame
 	frame = vs.read()
@@ -99,11 +99,12 @@ while True:
 		# them
 		if pts[i - 1] is None or pts[i] is None:
 			continue
-
+		"""
 		# otherwise, compute the thickness of the line and
 		# draw the connecting lines
 		thickness = int(np.sqrt(args["buffer"] / float(i + 1)) * 2.5)
 		cv2.line(frame, pts[i - 1], pts[i], (0, 0, 255), thickness)
+		"""
 
 	# flip frame and then then show the flipped frame to our screen
 	flipHorizontal = cv2.flip(frame, 1)
@@ -115,8 +116,8 @@ while True:
 		print("Average time by frame is " + str(sum(times) / len(times)))
 		break
 
-	end = timeit.timeit()
-	times.append(end-start)
+	end = time.time()
+	times.append(abs(end-start))
 	# print(end - start)
 
 # if we are not using a video file, stop the camera video stream
